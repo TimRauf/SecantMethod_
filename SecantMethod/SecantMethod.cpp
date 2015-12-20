@@ -3,8 +3,10 @@
 #include <stdlib.h>
 #include <math.h>
 
-double f(double x) { return sin(x) - x + 0.15; }        //Функция, нули которой ищем
-int main() {
+//Функция
+double f(double x) { return sin(x) - pow(x,3) + 0.15*x; }        
+int main() 
+{
 	setlocale(LC_CTYPE, "rus");
 	double tmp, x0, x1, eps;
 	int N;
@@ -22,15 +24,17 @@ int main() {
 		while (fabs(x1 - x0)>eps) {                    //Остановимся, если |x[n]-x[n+1]|<eps
 			tmp = x1;
 			x1 = x1 - (x1 - x0)*f(x1) / (f(x1) - f(x0));
+			std::cout << std::endl;
+			std::cout << "Шаг " << N << " x = " << x1;
 			x0 = tmp;
 			N++;
 		}
 		std::cout.setf(std::ios::scientific);          //выведем результат в научном формате
-		std::cout << std::endl << std::endl << "Корень x = " << x1 << std::endl << "количество шагов N = " << N << std::endl;
-		std::cout << "Проверка f = " << f(x1) << std::endl; //проведем проверку полученного значения
+		std::cout << std::endl << std::endl << "Корень x = " << x1 << " выполнено итераций N = " << N << std::endl;
+		std::cout << "Проверка f(x) = " << f(x1) << std::endl; //проведем проверку полученного значения
 		std::cout << std::endl << "Продолжить? (y - Да)" << std::endl;  //запрос на продолжение работы
 		std::cin >> y;                                 //пользователь должен ввести символ для продолжения
 	}
 	std::cin.get();
-	return 0;  //завершаем работу
+	return 0;  
 }
